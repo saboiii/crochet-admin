@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base{
+    body {
+      @apply text-[#272560] text-sm
+    }
+  }
+
+input, textarea{
+  @apply p-2 rounded-lg bg-[#FFE9D0] placeholder-[#dcc5aa] hover:bg-[#ffd8ab] hover:placeholder-[#cba780]
+}
+
+input:focus, textarea:focus{
+  @apply bg-[#ffd8ab] placeholder-[#cba780] text-[#8e704d] outline-none
+}
+
+label{
+  @apply font-bold
+}
+
+h1{
+  @apply font-bold text-lg
+}
+
+.button-1{
+  @apply my-2 flex py-2 px-4 bg-[#B1AFFF] rounded-xl hover:scale-[100.5%] duration-100 ease-in-out
+}
+
+.button-2{
+  @apply my-2 flex p-1 px-4 bg-[#fff2e3] outline outline-2 outline-[#fed6a7] text-[#f0b36d] rounded-md hover:scale-[100.5%] duration-100 ease-in-out
+}
+
+.button-3{
+  @apply my-2 flex p-1 px-4 bg-[#ffe3e3] outline outline-2 outline-[#fea7a7] text-[#f06d6d] rounded-md hover:scale-[100.5%] duration-100 ease-in-out
+}

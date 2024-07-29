@@ -1,19 +1,21 @@
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn } from "next-auth/react"
 import Navbar from "@/components/navbar/Navbar";
 
-export default function Layout({children}) {
+export default function Layout({ children }) {
   const { data: session } = useSession()
   if (!session) {
     return (
       <div className="min-h-screen min-w-screen bg-[#FEFBD8]">
-        <button onClick={() => signIn('google')} className="bg-[#B1AFFF] p-2 text-white rounded-lg">Login with Google</button>
+        <button onClick={() => signIn('google')} className="bg-[#B1AFFF] p-2 text-white rounded-lg m-2">
+          Login with Google
+        </button>
       </div>
     )
   }
   return (
     <div className="min-h-screen min-w-screen bg-[#FEFBD8]">
-      <Navbar/>
-      <div className="flex-col">
+      <Navbar />
+      <div className="flex m-4 flex-col">
         {children}
       </div>
     </div>

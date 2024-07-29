@@ -1,16 +1,17 @@
 import React from 'react'
 import Link from 'next/link'
+import { signOut } from "next-auth/react"
 import { useRouter } from 'next/router';
 
 const Navbar = () => {
     const inactiveLink = 'mx-2 mt-2 p-2';
-    const activeLink = inactiveLink+' bg-[#FEFBD8] text-black rounded-t-xl';
+    const activeLink = inactiveLink+' bg-[#FEFBD8] rounded-t-xl';
     const router = useRouter();
     const {pathname} = router;
     return (
-        <div className='flex bg-[#B1AFFF] text-white w-screen'>
-            <div className='flex justify-between items-center h-full w-full'>
-                <div>
+        <div className='bg-[#B1AFFF] w-screen'>
+            <div className='flex justify-between items-center mx-2'>
+                <div className='flex'>
                     <ul className='hidden md:flex'>
                         <Link href='/'>
                             <li className={pathname === '/' ? activeLink : inactiveLink}>Dashboard</li>
@@ -26,6 +27,7 @@ const Navbar = () => {
                         </Link>
                     </ul>
                 </div>
+                <button onClick={() => signOut()} className="flex p-2 mx-2">Log Out</button>
             </div>
         </div>
     )
