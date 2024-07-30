@@ -12,7 +12,11 @@ input, textarea{
   @apply p-2 rounded-lg bg-[#FFE9D0] placeholder-[#dcc5aa] hover:bg-[#ffd8ab] hover:placeholder-[#cba780]
 }
 
-input:focus, textarea:focus{
+select{
+  @apply p-2 mx-2 rounded-lg bg-[#FFE9D0] placeholder-[#dcc5aa] hover:bg-[#ffd8ab] hover:placeholder-[#cba780] 
+}
+
+input:focus, textarea:focus, select:focus{
   @apply bg-[#ffd8ab] placeholder-[#cba780] text-[#8e704d] outline-none
 }
 

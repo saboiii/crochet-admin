@@ -22,6 +22,9 @@ const Navbar = () => {
                         <Link href='/products'>
                             <li className={pathname.includes('/products') ? activeLink : inactiveLink}>Products</li>
                         </Link>
+                        <Link href='/categories'>
+                            <li className={pathname.includes('/categories') ? activeLink : inactiveLink}>Categories</li>
+                        </Link>
                         <Link href='/settings'>
                             <li className={pathname.includes('/settings') ? activeLink : inactiveLink}>Settings</li>
                         </Link>
