@@ -3,7 +3,8 @@ import GoogleProvider from 'next-auth/providers/google'
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import client from "@/lib/db"
 
-const adminEmails = ['saba.x.azad@gmail.com']
+let adminEmails = ['saba.x.azad@gmail.com'];
+
 export const authOptions = {
     adapter: MongoDBAdapter(client),
     providers: [
@@ -13,10 +14,10 @@ export const authOptions = {
         }),
     ],
     callbacks: {
-        session: ({session, token, user}) => {
-            if (adminEmails.includes(session?.user?.email)){
+        session: ({ session, token, user }) => {
+            if (adminEmails.includes(session?.user?.email)) {
                 return session;
-            } else{
+            } else {
                 return false;
             }
         },
@@ -24,11 +25,12 @@ export const authOptions = {
 }
 export default NextAuth(authOptions);
 
-export async function isAdminRequest(req, res){
+export async function isAdminRequest(req, res) {
     const session = await getServerSession(req, res, authOptions);
-    if (!adminEmails.includes(session?.user?.email)){
+    if (!adminEmails.includes(session?.user?.email)) {
         res.status(401);
         res.end();
+        console.log(adminEmails);
         throw 'You are not an admin.';
     }
 }

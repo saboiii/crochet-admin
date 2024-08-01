@@ -40,7 +40,7 @@ export default function ProductForm({
         if (_id) {
             await axios.put('/api/products', { ...data, _id });
         } else {
-            await axios.post('/api/products', data)
+            await axios.post('/api/products', data);
         }
         setGoToProducts(true);
     }

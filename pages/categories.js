@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { withSwal } from 'react-sweetalert2';
 import { ImCross } from "react-icons/im";
+import Head from "next/head";
 
 function Categories({ swal }) {
     const [name, setName] = useState('');
@@ -10,7 +11,7 @@ function Categories({ swal }) {
     const [editedCategory, setEditedCategory] = useState(null);
     const [parentCategory, setParentCategory] = useState('');
     const [properties, setProperties] = useState([]);
-    const itemStyle = 'bg-[#FFE9D0] rounded-xl flex-col p-2 overflow-hidden h-full justify-between flex-col flex';
+    const itemStyle = 'bg-[#FFE9D0] rounded-xl flex-col p-2 overflow-hidden h-full justify-between flex outline-dashed outline-[#f5cda0] outline-2';
 
     useEffect(() => {
         fetchCategories();
@@ -26,11 +27,11 @@ function Categories({ swal }) {
         const data = {
             name,
             parentCategory,
-            properties:properties.map(p => ({
-              name:p.name,
-              values:p.values.split(','),
+            properties: properties.map(p => ({
+                name: p.name,
+                values: p.values.split(','),
             })),
-          };
+        };
         if (editedCategory) {
             data._id = editedCategory._id;
             await axios.put('/api/categories', data);
@@ -39,7 +40,6 @@ function Categories({ swal }) {
             await axios.post('/api/categories', data);
         }
         setName('');
-        fetchCategories();
         setParentCategory('');
         setProperties('');
         fetchCategories();
@@ -107,6 +107,10 @@ function Categories({ swal }) {
 
     return (
         <Layout>
+            <Head>
+                <title>Crochets | Categories</title>
+                <meta name="description" content="Admin categories page for Crochet E-Commerce." />
+            </Head>
             <div className="mx-8">
                 <h1 className="my-2 flex">Categories</h1>
                 <form onSubmit={saveCategory} className="flex flex-col gap-1 bg-[#d1cff0] p-4 mb-4 rounded-lg">
@@ -159,7 +163,7 @@ function Categories({ swal }) {
                                         <p>{category.name}</p>
                                         <div className="parentCategory">{category.parent?.name}</div>
                                     </div>
-                                    <div>
+                                    <div className="mx-4">
                                         <button onClick={() => editCategory(category)} className="button-2 w-full">
                                             Edit
                                         </button>

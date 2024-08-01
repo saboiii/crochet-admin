@@ -2,6 +2,7 @@ import Layout from "@/components/layout/Layout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Head from "next/head";
 
 export default function Products() {
     const [products, setProducts] = useState([]);
@@ -15,6 +16,10 @@ export default function Products() {
 
     return (
         <Layout className='flex h-screen w-screen'>
+            <Head>
+                <title>Crochets | Products</title>
+                <meta name="description" content="Admin products page for Crochet E-Commerce." />
+            </Head>
             <div className="flex-col">
                 <Link href={'/products/new'} className="flex button-1 w-32 justify-center mb-4">Add Product</Link>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 z-10 w-full">
