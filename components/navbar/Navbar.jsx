@@ -8,6 +8,12 @@ const Navbar = () => {
     const activeLink = inactiveLink+' bg-[#FEFBD8] rounded-t-xl';
     const router = useRouter();
     const {pathname} = router;
+
+    async function logout(){
+        await router.push('/');
+        await signOut();
+    }
+
     return (
         <div className='bg-[#B1AFFF] w-screen'>
             <div className='flex justify-between items-center mx-2'>
@@ -30,7 +36,7 @@ const Navbar = () => {
                         </Link>
                     </ul>
                 </div>
-                <button onClick={() => signOut()} className="flex p-2 mx-2">Log Out</button>
+                <button onClick={() => logout()} className="flex p-2 mx-2">Log Out</button>
             </div>
         </div>
     )

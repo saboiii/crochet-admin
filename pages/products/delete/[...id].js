@@ -33,7 +33,7 @@ export default function DeleteProductPage() {
                 <p className="text-[#dd9d54]">&nbsp;{productInfo?.title}</p>
                 <p>? This action cannot be reversed.</p>
             </div>
-            <div className="flex flex-row">
+            <div className="flex flex-row p-2">
                 <button onClick={deleteProduct} className="button-1 w-16 justify-center mr-2">Yes</button>
                 <button onClick={goBack} className="button-1 w-16 justify-center">No</button>
             </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -12,6 +12,8 @@ export default function ProductForm({
     desc: existingDesc,
     price: existingPrice,
     images: existingImages,
+    category: existingCategory,
+    properties: existingProperties,
 }) {
     const [title, setTitle] = useState(existingTitle || '');
     const [desc, setDesc] = useState(existingDesc || '');
@@ -20,12 +22,21 @@ export default function ProductForm({
     const [goToProducts, setGoToProducts] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [category, setCategory] = useState(existingCategory || '');
+    const [productProperties, setProductProperties] = useState(existingProperties || {});
     const router = useRouter();
     let index = -1;
 
+    useEffect(() => {
+        axios.get("/api/categories").then(result => {
+            setCategories(result.data);
+        })
+    }, []);
+
     async function saveProduct(ev) {
         ev.preventDefault();
-        const data = { title, desc, price, images }
+        const data = { title, desc, price, images, category, properties: productProperties }
         if (_id) {
             await axios.put('/api/products', { ...data, _id });
         } else {
@@ -67,31 +78,71 @@ export default function ProductForm({
         setIsDeleting(false);
     }
 
+    const propertiesToFill = [];
+    if (categories.length > 0 && category) {
+        let catInfo = categories.find(({ _id }) => _id === category);
+        propertiesToFill.push(...catInfo.properties);
+        while (catInfo?.parent?._id) {
+            const parentCat = categories.find(({ _id }) => _id === catInfo.parent?._id);
+            propertiesToFill.push(...parentCat.properties);
+            catInfo = parentCat;
+        }
+    }
+
+    function setProductProp(propName, value){
+        setProductProperties(prev => {
+            const newProductProps = {...prev};
+            newProductProps[propName] = value;
+            return newProductProps;
+        });
+    }
+
     return (
-        <form onSubmit={saveProduct} className="flex-col w-screen px-8">
+        <form onSubmit={saveProduct} className="flex-col px-8 md:w-1/2">
             <label>Product Name</label>
-            <input type="text" placeholder="Product Name" className="flex w-1/2 my-2" value={title} onChange={ev => setTitle(ev.target.value)} />
+            <input type="text" placeholder="Product Name" className="flex w-full my-2" value={title} onChange={ev => setTitle(ev.target.value)} />
+            <label>Category</label>
+            <select className="flex h-9 my-2 ml-0" value={category} onChange={ev => setCategory(ev.target.value)}>
+                <option value="">No category selected.</option>
+                {categories.length > 0 && categories.map(cat => (
+                    <option value={cat._id}>{cat.name}</option>
+                ))}
+            </select>
+            <div className="bg-[#d1cff0] p-2 rounded-lg my-2 flex flex-wrap gap-2 justify-center w-full">
+                {propertiesToFill.length > 0 && propertiesToFill.map(p => (
+                    <div className="flex flex-row bg-[#B1AFFF] outline-[#8c89d0] outline-dashed p-2 rounded-lg">
+                        <div className="bg-[#FFFED3] text-[#979778] p-2 rounded-lg flex">
+                            {p.name}
+                        </div>
+                        <select className="ml-2 mr-0" value={productProperties[p.name]} onChange={ev => setProductProp(p.name, ev.target.value)}>
+                            {p.values.map(v => (
+                                <option value={v}>{v}</option>
+                            ))}
+                        </select>
+                    </div>
+                ))}
+            </div>
             <label>Description</label>
-            <textarea placeholder="Description" className="flex w-1/2 my-2" value={desc} onChange={ev => setDesc(ev.target.value)}></textarea>
+            <textarea placeholder="Description" className="flex w-full my-2" value={desc} onChange={ev => setDesc(ev.target.value)}></textarea>
             <label>Images</label>
             <div className="flex flex-wrap w-full">
                 <div className="flex mr-4 my-2">
-                    <label className="flex cursor-pointer font-normal w-32 h-32 text-[#e8cabc] rounded-lg outline-dashed outline-2 outline-[#e8cabc] items-center justify-center hover:outline-[#f8ddbd] hover:text-[#f8ddbd] duration-100 ease-in-out">
+                    <label className="flex cursor-pointer font-normal w-28 h-28 text-[#e8cabc] rounded-lg outline-dashed outline-2 outline-[#e8cabc] items-center justify-center hover:outline-[#f8ddbd] hover:text-[#f8ddbd] duration-100 ease-in-out">
                         <p className="mr-1">Upload</p>
                         <MdOutlineFileUpload className="text-xl" />
                         <input type="file" className="hidden" onChange={uploadImages}></input>
                     </label>
                 </div>
                 {isUploading && (
-                    <div className="flex w-32 h-32 justify-center items-center">
-                        <p className="">
+                    <div className="flex w-28 h-28 justify-center items-center">
+                        <p>
                             <PulseLoader size={10} color={"#f8ddbd"} speedMultiplier={2} />
                         </p>
                     </div>
                 )}
                 <ReactSortable className="my-2 flex flex-wrap gap-4" list={images} setList={updateImagesOrder}>
                     {!!images?.length && images.map(link => (
-                        <div key={link} className="w-32 h-32 hover:scale-[101%] duration-100 ease-in-out cursor-pointer">
+                        <div key={link} className="w-28 h-28 hover:scale-[101%] duration-100 ease-in-out cursor-pointer">
                             <div className="relative w-full h-full">
                                 <img
                                     src={link}
@@ -109,7 +160,7 @@ export default function ProductForm({
             </div>
             <label>Price (in SGD)</label>
             <input type="number" min="0.00" step="0.01" placeholder="Price" className="flex w-1/2 my-2" value={price} onChange={ev => setPrice(ev.target.value)} />
-            <button type="submit" className="button-1 flex">Save</button>
+            <button type="submit" className="button-1 flex my-2">Save</button>
         </form>
     );
 }
