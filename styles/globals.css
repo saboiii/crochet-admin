@@ -49,5 +49,5 @@ h1{
 }
 
 .sidemenu-link{
-  @apply font-extrabold uppercase text-xs
+  @apply font-extrabold uppercase md:text-xs
 }

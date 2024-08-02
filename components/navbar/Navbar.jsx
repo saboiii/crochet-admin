@@ -3,14 +3,15 @@ import Link from 'next/link'
 import { useSession, signOut } from "next-auth/react"
 import { useRouter } from 'next/router';
 import { MdOutlineDashboard, MdOutlineLocalShipping, MdOutlineShoppingBag, MdOutlineEdit, MdOutlineSettings } from "react-icons/md";
-import { FaChevronRight } from "react-icons/fa";
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = () => {
     const { data: session } = useSession();
     const router = useRouter();
     const iconsStyle = 'mx-4 hover:text-[#ffa7a7] ease-in-out duration-100';
     const [sideMenuOpened, setSideMenuOpened] = useState(false);
+    const [responsiveMenuOpened, setResponsiveMenuOpened] = useState(false);
     const { pathname } = router;
     const linkPositions = {
         '/orders': 'top-12',
@@ -66,7 +67,6 @@ const Navbar = () => {
         }
     ];
 
-
     async function logout() {
         await router.push('/');
         await signOut();
@@ -88,10 +88,34 @@ const Navbar = () => {
         setSideMenuOpened(!sideMenuOpened);
     }
 
+    function handleResponsiveMenu() {
+        setResponsiveMenuOpened(!responsiveMenuOpened);
+    }
+
     return (
         <div>
-            <div>
-
+            <div className='fixed md:hidden bg-[#160907] w-screen h-14 z-40'>
+                <div className='flex flex-row items-center align-middle justify-start px-2 py-4 text-[#FFC5C5]' onClick={() => handleResponsiveMenu()}>
+                    <RxHamburgerMenu size={24} className={iconsStyle + ' flex'} />
+                </div>
+            </div>
+            <div className={responsiveMenuOpened ? 'md:hidden px-8 py-32 h-screen w-screen bg-[#fbf2eb] z-30' : 'hidden'}>
+                {links.map((link) => (
+                    <div key={link.name} className='flex flex-col items-center'>
+                        <Link href={link.main} className="sidemenu-link">{link.name}</Link>
+                        {link.addLinks && (
+                            <div className="flex flex-row gap-2 my-4">
+                                <div className="flex flex-col px-2 justify-center align-middle gap-2 items-center">
+                                    {link.addLinks.map((subLink) => (
+                                        <Link key={subLink.name} href={subLink.link} className="flex text-center">
+                                            {subLink.name}
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ))}
             </div>
             <div className={sideMenuOpened ? 'flex w-[24vw] bg-[#fbf2eb] shadow-lg shadow-black/20' : 'hidden md:flex'}>
                 <div className='flex flex-col justify-between items-center bg-[#160907] h-screen py-3 text-[#FFC5C5] z-20'>

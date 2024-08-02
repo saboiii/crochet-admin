@@ -15,7 +15,7 @@ export default function Layout({ children }) {
   return (
     <div className="flex flex-row min-h-screen min-w-screen ">
       <Navbar />
-      <div className="flex p-10 flex-col">
+      <div className="flex px-10 py-20 md:p-10 flex-col">
         {children}
       </div>
     </div>
