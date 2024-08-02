@@ -111,9 +111,9 @@ function Categories({ swal }) {
                 <title>Crochets | Categories</title>
                 <meta name="description" content="Admin categories page for Crochet E-Commerce." />
             </Head>
-            <div className="mx-8">
+            <div>
                 <h1 className="my-2 flex">Categories</h1>
-                <form onSubmit={saveCategory} className="flex flex-col gap-1 bg-[#d1cff0] p-4 mb-4 rounded-lg">
+                <form onSubmit={saveCategory} className="flex w-full flex-col gap-1 bg-[#FFEBD8] p-4 mb-4 rounded-lg">
                     <label>{editedCategory ? `Edit Category "${editedCategory.name}"` : 'Create Category'}</label>
                     <div className="flex flex-col md:flex-row">
                         <input type="text" placeholder={'Category Name'} className="h-9 my-2" value={name} onChange={ev => setName(ev.target.value)} />
@@ -129,9 +129,9 @@ function Categories({ swal }) {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:mb-2">
                         {properties.length > 0 && properties.map((property, index) => (
-                            <div className="bg-[#B1AFFF] p-4 flex flex-wrap gap-2 rounded-lg overflow-hidden">
+                            <div className="bg-[#FFC5C5] p-4 flex flex-wrap gap-2 rounded-lg overflow-hidden">
                                 <div className="flex pb-2 w-full justify-end">
-                                    <ImCross type="button" onClick={() => removeProperty(index)} className="text-[#6462b4] hover:scale-110 duration-100 ease-in-out" size={8} />
+                                    <ImCross type="button" onClick={() => removeProperty(index)} className="text-[#955252] hover:scale-110 duration-100 ease-in-out" size={8} />
                                 </div>
                                 <input type="text" value={property.name} onChange={ev => handlePropertyNameChange(index, property, ev.target.value)} placeholder="Property Name (Ex: Color)" className="w-full" />
                                 <input type="text" value={property.values} onChange={ev => handlePropertyValuesChange(index, property, ev.target.value)} placeholder="Values (Separated by commas)" className="w-full" />
@@ -150,7 +150,7 @@ function Categories({ swal }) {
                                 }}
                                 className="button-1 md:w-20 justify-center">Cancel</button>
                         )}
-                        <button type="submit" className="button-1 md:w-20 justify-center">Save</button>
+                        <button type="submit" className="button-1 md:w-16 justify-center">Save</button>
                     </div>
                 </form>
 

@@ -4,20 +4,20 @@
 
 @layer base{
     body {
-      @apply text-[#272560] text-sm
+      @apply text-[#602925] text-sm bg-[#f1ebe5]
     }
   }
 
 input, textarea{
-  @apply p-2 rounded-lg bg-[#FFE9D0] placeholder-[#dcc5aa] hover:bg-[#ffd8ab] hover:placeholder-[#cba780]
+  @apply p-2 rounded-lg bg-[#ffd7d7] placeholder-[#eaafaf] hover:bg-[#fccece] hover:placeholder-[#dda3a3]
 }
 
 select{
-  @apply p-2 md:mx-2 rounded-lg bg-[#FFE9D0] hover:bg-[#ffd8ab] text-[#cba780] 
+  @apply p-2 md:mx-2 rounded-lg bg-[#ffd7d7] hover:bg-[#fccece] text-[#dda3a3]
 }
 
 input:focus, textarea:focus, select:focus{
-  @apply bg-[#ffd8ab] placeholder-[#cba780] text-[#8e704d] outline-none
+  @apply bg-[#FFC5C5] placeholder-[#e8a3a3] text-[#e88a6d] outline-none
 }
 
 label{
@@ -29,7 +29,7 @@ h1{
 }
 
 .button-1{
-  @apply flex py-2 px-4 bg-[#B1AFFF] rounded-xl hover:scale-[100.5%] duration-100 ease-in-out
+  @apply py-2 px-4 bg-[#FFC5C5] rounded-xl hover:scale-[100.5%] duration-100 ease-in-out
 }
 
 .button-2{
@@ -42,4 +42,12 @@ h1{
 
 .parentCategory{
   @apply flex text-[#B1AFFF]
+}
+
+.navbar-link{
+  @apply h-12 flex items-center
+}
+
+.sidemenu-link{
+  @apply font-extrabold uppercase text-xs
 }

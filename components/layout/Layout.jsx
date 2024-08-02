@@ -5,7 +5,7 @@ export default function Layout({ children }) {
   const { data: session } = useSession()
   if (!session) {
     return (
-      <div className="min-h-screen min-w-screen bg-[#FEFBD8]">
+      <div className="min-h-screen min-w-screens">
         <button onClick={() => signIn('google')} className="bg-[#B1AFFF] p-2 text-white rounded-lg m-2">
           Login with Google
         </button>
@@ -13,9 +13,9 @@ export default function Layout({ children }) {
     )
   }
   return (
-    <div className="min-h-screen min-w-screen bg-[#FEFBD8]">
+    <div className="flex flex-row min-h-screen min-w-screen ">
       <Navbar />
-      <div className="flex p-4 flex-col">
+      <div className="flex p-10 flex-col">
         {children}
       </div>
     </div>

@@ -44,7 +44,7 @@ export default function Settings() {
                 <title>Crochets | Home</title>
                 <meta name="description" content="Admin settings page for Crochet E-Commerce." />
             </Head>
-            <div>
+            <div >
                 <form className="flex flex-col" onSubmit={doWhitelist}>
                     <label>Whitelist Email</label>
                     <div className="flex flex-row my-2">
@@ -54,11 +54,11 @@ export default function Settings() {
                             Add Admin
                         </button>
                     </div>
-                    <div className="grid grid-cols-1 bg-[#FFE9D0] md:w-1/2 py-2 px-4 rounded-lg">
+                    <div className="grid grid-cols-1 rounded-lg">
                         {whitelistedEmails.map((email, index) => (
-                            <div className="w-full bg-[#FFFED3] px-4 py-2 rounded-lg my-2 text-[#f2bd81] flex-row flex items-center justify-between">
+                            <div className="w-full bg-[#FFEBD8] px-4 py-2 rounded-lg my-2 text-[#f2bd81] flex-row flex items-center justify-between">
                                 <div className="p-2">
-                                <p className="text-[#87d4f8] font-bold">APPROVED ADMIN</p>
+                                <p className="text-[#b0c590] font-bold">APPROVED ADMIN</p>
                                 "{email.whitelistedEmail}"
                                 </div>
                                 <button className="button-2" type="button" onClick={() => removeWhitelistedEmail(index)}>
