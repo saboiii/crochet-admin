@@ -10,6 +10,8 @@ const Navbar = () => {
     const { data: session } = useSession();
     const router = useRouter();
     const iconsStyle = 'mx-4 hover:text-[#ffa7a7] ease-in-out duration-100';
+    const inactiveSublink = 'flex text-xs text-[#62302c]'
+    const activeSublink = 'flex text-xs text-[#FFC5C5]'
     const [sideMenuOpened, setSideMenuOpened] = useState(false);
     const [responsiveMenuOpened, setResponsiveMenuOpened] = useState(false);
     const { pathname } = router;
@@ -19,6 +21,9 @@ const Navbar = () => {
         '/categories': 'top-36',
         '/settings': 'top-48'
     };
+    const sideLinkPositions = {
+        '/products/new': 'top-[214px]',
+    };
     const links = [
         {
             name: "Dashboard",
@@ -26,8 +31,8 @@ const Navbar = () => {
             icon: MdOutlineDashboard,
             addLinks: [
                 { name: "Overall Revenue", link: "/" },
-                { name: "Performance", link: "/" },
-                { name: "Conversion Rate", link: "/" }
+                { name: "Performance", link: "" },
+                { name: "Conversion Rate", link: "" }
             ]
         },
         {
@@ -35,8 +40,8 @@ const Navbar = () => {
             main: "/orders",
             icon: MdOutlineLocalShipping,
             addLinks: [
-                { name: "Order Status", link: "/" },
-                { name: "Returns & Refunds", link: "/" }
+                { name: "Order Status", link: "" },
+                { name: "Returns & Refunds", link: "" }
             ]
         },
         {
@@ -45,7 +50,7 @@ const Navbar = () => {
             icon: MdOutlineShoppingBag,
             addLinks: [
                 { name: "Add Product", link: "/products/new" },
-                { name: "Inventory Levels", link: "/" }
+                { name: "Inventory Levels", link: "" }
             ]
         },
         {
@@ -53,7 +58,7 @@ const Navbar = () => {
             main: "/categories",
             icon: MdOutlineEdit,
             addLinks: [
-                { name: "Popular Categories", link: "/" }
+                { name: "Popular Categories", link: "" }
             ]
         },
         {
@@ -61,8 +66,8 @@ const Navbar = () => {
             main: "/settings",
             icon: MdOutlineSettings,
             addLinks: [
-                { name: "Profile", link: "/" },
-                { name: "Admin Settings", link: "/" }
+                { name: "Profile", link: "" },
+                { name: "Admin Settings", link: "" }
             ]
         }
     ];
@@ -79,6 +84,17 @@ const Navbar = () => {
                 return '0';
             } else if (pathname.includes(key)) {
                 return linkPositions[key];
+            }
+        }
+    };
+
+    const getPositionSide = () => {
+        const keys = Object.keys(sideLinkPositions);
+        for (const key of keys) {
+            if (pathname === '/') {
+                return '0';
+            } else if (pathname.includes(key)) {
+                return sideLinkPositions[key];
             }
         }
 
@@ -117,12 +133,12 @@ const Navbar = () => {
                     </div>
                 ))}
             </div>
-            <div className={sideMenuOpened ? 'flex w-[24vw] bg-[#fbf2eb] shadow-lg shadow-black/20' : 'hidden md:flex'}>
-                <div className='flex flex-col justify-between items-center bg-[#160907] h-screen py-3 text-[#FFC5C5] z-20'>
+            <div className={sideMenuOpened ? 'hidden md:flex w-[24vw] bg-[#160907] shadow-lg shadow-black/20 text-[#FFC5C5]' : 'hidden md:flex'}>
+                <div className='flex flex-col justify-between items-center bg-[#160907] h-screen py-3 z-20'>
                     <div className='flex flex-row w-full'>
                         <div className='flex flex-col w-full mt-24 z-10 items-center'>
                             {links.map(link => (
-                                <Link href={link.main} className="navbar-link">
+                                <Link href={link.main} className="navbar-link text-[#FFC5C5]">
                                     {<link.icon size={20} className={iconsStyle} />}
                                 </Link>
                             ))}
@@ -134,7 +150,7 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className='flex flex-col '>
-                        <div className={sideMenuOpened ? "hidden" : "cursor-pointer relative justify-center w-full h-8 rounded-full mb-3 items-center group"} onClick={() => handleSideMenu()}>
+                        <div className={sideMenuOpened ? "hidden" : "cursor-pointer relative justify-center w-full h-8 text-[#FFC5C5] rounded-full mb-3 items-center group"} onClick={() => handleSideMenu()}>
                             <FaChevronRight size={16} className="absolute z-20 left-[8px] top-[12px] group-hover:text-black" />
                             <div className="absolute left-[-4px] top-0 w-32 py-[10px] pl-4 text-[#28120e] bg-[#fbf2eb] shadow-sm rounded-full text-center hidden group-hover:block group-hover:text-black">
                                 Expand
@@ -155,7 +171,7 @@ const Navbar = () => {
                 <div className={sideMenuOpened ? 'px-8 py-16 transition flex flex-col justify-between w-full overflow-hidden' : 'hidden'}>
                     <div className='flex flex-col'>
                         <h1 className=' mb-2'>Admin</h1>
-                        <div className={`absolute h-5 px-[1px] top-0 z-20`}>
+                        <div className={`absolute h-5 px-[1px] top-0 z-20 ${getPositionSide()}`}>
                             <div className='bg-[#FFC5C5] px-[1px] h-4 rounded-full absolute right-0 top-[132px]' />
                         </div>
                         {links.map((link) => (
@@ -163,10 +179,10 @@ const Navbar = () => {
                                 <Link href={link.main} className="sidemenu-link">{link.name}</Link>
                                 {link.addLinks && (
                                     <div className="flex flex-row gap-2 my-4">
-                                        <div className="relative px-[1px] bg-[#f7e2e2] rounded-full" />
+                                        <div className="relative px-[1px] bg-[#2e1412] rounded-full" />
                                         <div className="flex flex-col px-2 justify-center align-middle gap-2">
                                             {link.addLinks.map((subLink) => (
-                                                <Link key={subLink.name} href={subLink.link} className="flex text-xs">
+                                                <Link key={subLink.name} href={subLink.link} className={pathname == (subLink.link) ? activeSublink : inactiveSublink}>
                                                     {subLink.name}
                                                 </Link>
                                             ))}
@@ -176,8 +192,8 @@ const Navbar = () => {
                             </div>
                         ))}
                     </div>
-                    <div className='p-8'>
-                        <div className='flex flex-row justify-center py-2 rounded-full overflow-hidden items-center bg-[#FFC5C5] group-hover:bg-[#f9baba] ease-in-out duration-200 w-full hover:scale-[101.5%] cursor-pointer group' onClick={() => handleSideMenu()}>
+                    <div className='lg:p-8'>
+                        <div className='flex flex-row justify-center py-2 text-[#28120e] rounded-full overflow-hidden items-center bg-[#FFC5C5] group-hover:bg-[#f9baba] ease-in-out duration-200 w-full hover:scale-[101.5%] cursor-pointer group' onClick={() => handleSideMenu()}>
                             <FaChevronLeft className='mr-4' />
                             Collapse
                         </div>
