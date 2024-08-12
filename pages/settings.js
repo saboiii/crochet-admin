@@ -44,13 +44,13 @@ export default function Settings() {
                 <title>Crochets | Home</title>
                 <meta name="description" content="Admin settings page for Crochet E-Commerce." />
             </Head>
-            <div >
+            <div className="w-[85vw] lg:w-[90vw]">
                 <form className="flex flex-col" onSubmit={doWhitelist}>
                     <label>Whitelist Email</label>
                     <div className="flex flex-row my-2">
                         <input type="email" placeholder="Email" value={whitelistedEmail} onChange={ev => setWhitelistedEmail(ev.target.value)} />
-                        <button type="submit" className="button-1 mx-2 items-center" >
-                            <IoPersonAddSharp className="mr-2"/>
+                        <button type="submit" className="flex button-1 mx-2 items-center" >
+                            <IoPersonAddSharp className="inline mr-2"/>
                             Add Admin
                         </button>
                     </div>

@@ -98,7 +98,7 @@ export default function ProductForm({
     }
 
     return (
-        <form onSubmit={saveProduct} className="flex-col px-8 md:w-1/2">
+        <form onSubmit={saveProduct} className="flex-col w-[50vw] px-8">
             <label>Product Name</label>
             <input type="text" placeholder="Product Name" className="flex w-full my-2" value={title} onChange={ev => setTitle(ev.target.value)} />
             <label>Category</label>
@@ -108,8 +108,8 @@ export default function ProductForm({
                     <option value={cat._id}>{cat.name}</option>
                 ))}
             </select>
-            <div className="bg-[#d1cff0] p-2 rounded-lg my-2 flex flex-wrap gap-2 justify-center w-full">
-                {propertiesToFill.length > 0 && propertiesToFill.map(p => (
+            {propertiesToFill.length > 0 ? (<div className="bg-[#d1cff0] p-2 rounded-lg my-2 flex flex-wrap gap-2 justify-center w-full">
+                {propertiesToFill.map(p => (
                     <div className="flex flex-row bg-[#B1AFFF] outline-[#8c89d0] outline-dashed p-2 rounded-lg">
                         <div className="bg-[#FFFED3] text-[#979778] p-2 rounded-lg flex">
                             {p.name}
@@ -121,7 +121,7 @@ export default function ProductForm({
                         </select>
                     </div>
                 ))}
-            </div>
+            </div>):null}
             <label>Description</label>
             <textarea placeholder="Description" className="flex w-full my-2" value={desc} onChange={ev => setDesc(ev.target.value)}></textarea>
             <label>Images</label>

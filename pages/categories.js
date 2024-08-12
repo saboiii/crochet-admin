@@ -111,7 +111,7 @@ function Categories({ swal }) {
                 <title>Crochets | Categories</title>
                 <meta name="description" content="Admin categories page for Crochet E-Commerce." />
             </Head>
-            <div>
+            <div className="flex flex-col w-[85vw] lg:w-[90vw]">
                 <h1 className="my-2 flex">Categories</h1>
                 <form onSubmit={saveCategory} className="flex w-full flex-col gap-1 bg-[#FFEBD8] p-4 mb-4 rounded-lg">
                     <label>{editedCategory ? `Edit Category "${editedCategory.name}"` : 'Create Category'}</label>
